@@ -1,0 +1,17 @@
+node_modules/
+.DS_Store
+*.log
+*.log.*
+coverage
+.npmrc
+
+.yarn/*
+.pnp.*
+!.yarn/releases
+!.yarn/sdks
+
+.env
+.secrets
+.actrc
+
+dist
