@@ -1,0 +1,24 @@
+{
+  "name": "@figtion/server",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "tsc -b",
+    "dev:server": "ts-node --project tsconfig.json src/index.ts"
+  },
+  "dependencies": {
+    "@notionhq/client": "^2.2.15",
+    "axios": "^1.7.9",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2"
+  },
+  "devDependencies": {
+    "@types/cors":"2.8.17",
+    "@types/express":"5.0.1",
+    "concurrently": "^9.1.0",
+    "esbuild": "^0.13.5",
+    "prettier": "^2.3.2",
+    "typescript": "^5.0.4"
+  }
+}

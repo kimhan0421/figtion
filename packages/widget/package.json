@@ -1,0 +1,25 @@
+{
+  "name": "@figtion/widget",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "tsc:main": "tsc --noEmit -p widget/src",
+    "build:main": "esbuild src/code.tsx --bundle --outfile=../../dist/code.js"
+  },
+  "dependencies": {
+    "@figma/plugin-typings": "^1.110.0",
+    "@figma/widget-typings": "^1.11.0",
+    "@figtion/notion-ui": "workspace:*",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "prettier": "3.5.3",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3",
+    "vite": "^6.3.0",
+    "vite-plugin-singlefile": "^2.2.0",
+    "vite-plugin-string": "^1.2.3"
+  }
+}

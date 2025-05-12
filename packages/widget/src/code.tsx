@@ -1,3 +1,4 @@
+// @ts-ignore
 const { widget } = figma;
 const { AutoLayout, Text } = widget;
 
@@ -21,9 +22,10 @@ function Widget() {
         });
       }}>
       <Text fontSize={32} horizontalAlignText="center">
-        Click Me
+        Me112
       </Text>
     </AutoLayout>
   );
 }
+
 widget.register(Widget);

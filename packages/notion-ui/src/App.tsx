@@ -1,13 +1,14 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import "./App.css";
-import { PartialPageObjectResponse } from "@notionhq/client/build/src/api-endpoints";
+import type { PartialPageObjectResponse } from "@notionhq/client/build/src/api-endpoints";
 
 function App() {
   const [notionUrl, setNotionUrl] = useState("");
   const [blockData, setBlockData] = useState<PartialPageObjectResponse | null>(
     null
   );
-  const [error, setError] = useState(null);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [error, setError] = useState<string | null | unknown>(null);
 
   // Notion URL에서 Block ID 추출 함수
   const extractBlockIdFromURL = (url: string) => {
@@ -20,9 +21,8 @@ function App() {
       return null;
     }
   };
-
   // Notion API 호출 함수
-  const fetchBlockData = async (blockId) => {
+  const fetchBlockData = async (blockId: string) => {
     try {
       // Notion API를 호출하여 블록 데이터를 가져옴
       const response = await fetch("http://localhost:5001/get-block-data", {
@@ -42,15 +42,18 @@ function App() {
 
       const data = await response.json();
       return data;
-    } catch (err) {
+    } catch (err: unknown) {
       console.error("Error fetching block data:", err);
-      setError(err.message);
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError("An unknown error occurred");
+      }
       return null;
     }
   };
-
   // 하위 블록 데이터를 가져오는 함수
-  const fetchBlockChildren = async (blockId) => {
+  const fetchBlockChildren = async (blockId: string) => {
     try {
       const response = await fetch("http://localhost:5001/get-block-children", {
         method: "POST",
@@ -105,7 +108,11 @@ function App() {
   };
 
   // 하위 블록 데이터를 가져오는 함수
-  const enrichBlockWithChildren = async (block) => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const enrichBlockWithChildren = async (block: {
+    has_children: boolean;
+    id: string;
+  }) => {
     if (!block.has_children) return block;
 
     const children = await fetchBlockChildren(block.id);
@@ -120,9 +127,19 @@ function App() {
       children: enrichedChildren,
     };
   };
-
   // Notion 블록 데이터를 렌더링하는 함수
-  const renderBlock = (block) => {
+  const renderBlock = (block: {
+    id: string;
+    type: string;
+    heading_1?: { rich_text: { plain_text: string }[] };
+    heading_2?: { rich_text: { plain_text: string }[] };
+    heading_3?: { rich_text: { plain_text: string }[] };
+    paragraph?: { rich_text: { plain_text: string }[] };
+    bulleted_list_item?: { rich_text: { plain_text: string }[] };
+    numbered_list_item?: { rich_text: { plain_text: string }[] };
+    to_do?: { checked: boolean; rich_text: { plain_text: string }[] };
+    quote?: { rich_text: { plain_text: string }[] };
+  }) => {
     if (!block) return null;
 
     switch (block.type) {
@@ -224,7 +241,11 @@ function App() {
   };
 
   // Notion 데이터를 렌더링하는 함수
-  const renderStructuredData = (data) => {
+  const renderStructuredData = (data: {
+    child_page?: { title: string };
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    children?: any[];
+  }) => {
     if (!data) return null;
 
     return (
@@ -254,7 +275,6 @@ function App() {
           fontSize: "14px",
         }}
       />
-      {/* 데이터 요청 버튼 */}
       <button onClick={handleFetchData} style={{ padding: "10px 20px" }}>
         Fetch Block Data
       </button>

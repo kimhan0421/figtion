@@ -1,11 +1,11 @@
 {
-  "name": "My Widget Plugin",
-  "id": "widget-plugin-123",
+  "name": "Figtion Plugin",
+  "id": "figtion-plugin-123",
   "api": "1.0.0",
   "editorType": ["figma"],
   "permissions": [],
   "containsWidget": true,
-  "main": "dist/code.js",
-  "ui": "dist/index.html",
+  "main": "code.js",
+  "ui": "index.html",
   "widgetApi": "1.0.0"
 }
